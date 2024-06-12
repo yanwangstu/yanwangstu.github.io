@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Instruction</title>
+    <link href="/2024/06/12/Instruction/Instruction/"/>
+    <url>/2024/06/12/Instruction/Instruction/</url>
+    
+    <content type="html"><![CDATA[<p>This is a instruction post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. </p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Delete-a-post"><a href="#Delete-a-post" class="headerlink" title="Delete a post"></a>Delete a post</h3><p>delete the markdown and related pictures directly.</p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br>$ hexo s<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br>$ hexo g<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br>$ hexo d<br></code></pre></td></tr></table></figure><h3 id="Generate-and-deploy"><a href="#Generate-and-deploy" class="headerlink" title="Generate and deploy"></a>Generate and deploy</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo g -d<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><h3 id="Insert-code-or-graphs"><a href="#Insert-code-or-graphs" class="headerlink" title="Insert code or graphs"></a>Insert code or graphs</h3><h4 id="code"><a href="#code" class="headerlink" title="code"></a>code</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br></code></pre></td></tr></table></figure><h4 id="graph"><a href="#graph" class="headerlink" title="graph"></a>graph</h4><img src="/2024/06/12/Instruction/Instruction/test.jpg" class="" title="example"><center><img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.t8aoi3rPxMcU7unPFWKqpwHaEq?w=277&h=180&c=7&r=0&o=5&dpr=2&pid=1.7" alt="图片名称" width="50%"/></center><img src="test.jpg" alt="图片描述" width="50%"/>]]></content>
+    
+    
+    <categories>
+      
+      <category>Instruction</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Instruction</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
