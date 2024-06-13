@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/2024/06/12/Instruction/Instruction/leancloud-3.jpg">
 <meta property="og:image" content="http://example.com/2024/06/12/Instruction/Instruction/info.jpg">
 <meta property="article:published_time" content="2024-06-12T15:56:45.000Z">
-<meta property="article:modified_time" content="2024-06-13T02:35:49.184Z">
+<meta property="article:modified_time" content="2024-06-13T03:38:54.834Z">
 <meta property="article:author" content="Yan Wang">
 <meta property="article:tag" content="Github Pages Deployment">
 <meta name="twitter:card" content="summary_large_image">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k words
+          1.2k words
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          20 mins
+          21 mins
         
       </span>
     
@@ -340,7 +340,8 @@ target="_blank" rel="noopener" href="https://nodejs.org/en">NodeJS</a></h3>
 <li><p>在shell中转到用于存储Hexo项目的文件夹，输入如下内容创建一个新Hexo项目
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo init blog<br><span class="hljs-built_in">cd</span> blog<br>npm install<br></code></pre></td></tr></table></figure></p></li>
 <li><p>在shell中输入如下内容，在本地生成相关静态文件(hexo g)并启动(hexo
-s)，通过浏览器访问浏览器访问 (http://localhost:4000) 查看效果
+s)，通过浏览器访问浏览器访问 <a
+target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a> 查看效果
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo s<br></code></pre></td></tr></table></figure></p></li>
 <li><p>如果看到如下图片则说明部署成功</p>
 <center>
@@ -350,7 +351,8 @@ s)，通过浏览器访问浏览器访问 (http://localhost:4000) 查看效果
 <h3 id="更换fluid主题并配置相关字段使界面更加美观实用">4.
 更换Fluid主题，并配置相关字段，使界面更加美观实用</h3>
 <ul>
-<li><p>通过此网址(https://github.com/fluid-dev/hexo-theme-fluid)
+<li><p>通过此网址<a
+target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">https://github.com/fluid-dev/hexo-theme-fluid</a>
 下载Fluid主题并将文件夹重命名为fluid，存放于blog/themes文件夹中</p></li>
 <li><p>打开blog/_config.yml配置文件，修改theme，language和title等字段
 <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">theme:</span> fluid <span class="hljs-meta"># 一定要改</span><br><span class="hljs-symbol">post_asset_folder:</span> true <span class="hljs-meta"># 一定要改，方面后期发布修改博客文章  </span><br><span class="hljs-symbol">language:</span> <span class="hljs-built_in">zh</span>-CN <span class="hljs-meta"># 酌情选择（决定导航栏的显示语言）</span><br><span class="hljs-symbol">title:</span> a blog <span class="hljs-meta"># 酌情设置（决定浏览器tab的显示内容）</span><br></code></pre></td></tr></table></figure></p></li>
@@ -358,8 +360,9 @@ s)，通过浏览器访问浏览器访问 (http://localhost:4000) 查看效果
 <li><p>在shell中输入如下代码，在Blog中添加About页面
 <figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haxe">hexo <span class="hljs-keyword">new</span> <span class="hljs-type">page</span> about<br></code></pre></td></tr></table></figure></p></li>
 <li><p>之后可以在blog/source/about/index.md中修改文件调整页面内容</p></li>
-<li><p>再次在shell中输入如下内容，通过浏览器访问浏览器访问
-(http://localhost:4000) 查看更换主题后的效果 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo s<br></code></pre></td></tr></table></figure></p></li>
+<li><p>再次在shell中输入如下内容，通过浏览器访问浏览器访问 <a
+target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a>
+查看更换主题后的效果 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo s<br></code></pre></td></tr></table></figure></p></li>
 </ul>
 <h3 id="设置阅读量统计">5. 设置阅读量统计</h3>
 <ul>
@@ -380,13 +383,17 @@ target="_blank" rel="noopener" href="https://console.leancloud.cn/">LeanCloud官
 </center></li>
 <li><p>打开blog/thems/fluid/_config.yml配置文件,修改如下内容
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-meta"># 一定要改</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">web_analytics:</span><br><span class="hljs-symbol">  enable:</span> true <br><span class="hljs-symbol"></span><br><span class="hljs-symbol">leancloud:</span><br><span class="hljs-symbol">    app_id:</span> <span class="hljs-params">&lt;AppID&gt;</span><br><span class="hljs-symbol">    app_key:</span> <span class="hljs-params">&lt;AppKey&gt;</span><br><span class="hljs-symbol">    server_url:</span> <span class="hljs-params">&lt;REST API 服多器地址&gt;</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">views:</span><br><span class="hljs-symbol">      enable:</span> true<br><span class="hljs-symbol">      source:</span> <span class="hljs-string">&quot;leancloud&quot;</span><br><span class="hljs-symbol">      format:</span> <span class="hljs-string">&quot;&#123;&#125; 次&quot;</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">statistics:</span><br><span class="hljs-symbol">    enable:</span> true<br><span class="hljs-symbol">    source:</span> <span class="hljs-string">&quot;leancloud&quot;</span><br><span class="hljs-symbol">    pv_format:</span> <span class="hljs-string">&quot;总访问量 &#123;&#125; 次&quot;</span><br><span class="hljs-symbol">    uv_format:</span> <span class="hljs-string">&quot;总访客数 &#123;&#125; 人&quot;</span><br></code></pre></td></tr></table></figure></p></li>
-<li><p>再次在shell中输入如下内容，通过浏览器访问浏览器访问
-(http://localhost:4000) 查看是否在页面下方显示访问情况 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo s<br></code></pre></td></tr></table></figure></p>
+<li><p>再次在shell中输入如下内容，通过浏览器访问浏览器访问 <a
+target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a>
+查看是否在页面下方显示访问情况 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo s<br></code></pre></td></tr></table></figure></p>
 <center>
 <p><img src="info.jpg" srcset="/img/loading.gif" lazyload alt="info" width="80%"/></p>
 </center></li>
 </ul>
-<h3 id="上传至github">6. 上传至Github</h3>
+<h3 id="设置latex公式">6. 设置latex公式</h3>
+<p>详见 <a
+target="_blank" rel="noopener" href="https://fluid-dev.github.io/hexo-fluid-docs/guide/#latex-数学公式">https://fluid-dev.github.io/hexo-fluid-docs/guide/#latex-数学公式</a></p>
+<h3 id="上传至github">7. 上传至Github</h3>
 <ul>
 <li><p>安装hexo-deployer-git <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo npm install hexo-deployer-git --save<br></code></pre></td></tr></table></figure></p></li>
 <li><p>如图所示，获得Personal access
@@ -421,9 +428,17 @@ tokens，并注意在获得tokens时要选择Tokens(classic)并勾选repo</p></l
 </ul>
 <h3
 id="在shell中输入如下内容通过浏览器访问浏览器访问httplocalhost4000-查看是否更改成功">5.
-在shell中输入如下内容，通过浏览器访问浏览器访问(http://localhost:4000)
+在shell中输入如下内容，通过浏览器访问浏览器访问<a
+target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a>
 查看是否更改成功</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo s<br></code></pre></td></tr></table></figure>
+<h2 id="三参考内容">三、参考内容</h2>
+<h3 id="httpsblog.csdn.netyaorongkearticledetails119089190">1. <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/yaorongke/article/details/119089190">https://blog.csdn.net/yaorongke/article/details/119089190</a></h3>
+<h3 id="httpszhcano.github.ioleancloudhexo开启评论和文章阅读量">2. <a
+target="_blank" rel="noopener" href="https://zhcano.github.io/LeanCloud+Hexo开启评论和文章阅读量/">https://zhcano.github.io/LeanCloud+Hexo开启评论和文章阅读量/</a></h3>
+<h3 id="httpsfluid-dev.github.iohexo-fluid-docsguide">3. <a
+target="_blank" rel="noopener" href="https://fluid-dev.github.io/hexo-fluid-docs/guide/">https://fluid-dev.github.io/hexo-fluid-docs/guide/</a></h3>
 
                 
               </div>
@@ -514,12 +529,6 @@ id="在shell中输入如下内容通过浏览器访问浏览器访问httplocalho
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/13/%E4%B9%A0%E6%A6%82/" title="习概考点整理">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">习概考点整理</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
@@ -576,12 +585,6 @@ id="在shell中输入如下内容通过浏览器访问浏览器访问httplocalho
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -785,49 +788,6 @@ id="在shell中输入如下内容通过浏览器访问浏览器访问httplocalho
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script defer src="/js/leancloud.js" ></script>
 
