@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.svg">
+  <link rel="icon" href="/img/icon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yan Wang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Event-Event Relation Extraction Datasets 1. MAVEN-ERE 🤩🤩🤩 Paper: https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2211.07342 Data Distribution: - 4,480 documents - 168 fine-grained event types - 112,276 mentions - 103,193 ev">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Event-Event Relation Extraction Datasets">
+<meta property="og:url" content="http://example.com/2024/07/31/event-to-event-relation-extraction-dataset/index.html">
+<meta property="og:site_name" content="Yan Wang&#39;s Blog">
+<meta property="og:description" content="Event-Event Relation Extraction Datasets 1. MAVEN-ERE 🤩🤩🤩 Paper: https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2211.07342 Data Distribution: - 4,480 documents - 168 fine-grained event types - 112,276 mentions - 103,193 ev">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-31T08:33:50.479Z">
+<meta property="article:modified_time" content="2024-08-08T11:58:12.687Z">
+<meta property="article:author" content="Yan Wang">
+<meta property="article:tag" content="datasets">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Event-Event Relation Extraction Datasets - Yan Wang&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"pZ0EE7gT8tJRoYK1puEQzIy4-gzGzoHsz","app_key":"D5vg3ofAivBJWAo15xNUlCe3","server_url":"https://pz0ee7gt.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yan Wang&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">Event-Event Relation Extraction Datasets</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-31 16:33" pubdate>
+          July 31, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          688 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Event-Event Relation Extraction Datasets</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="event-event-relation-extraction-datasets">Event-Event Relation
+Extraction Datasets</h1>
+<h2 id="maven-ere">1. <a
+target="_blank" rel="noopener" href="https://github.com/THU-KEG/MAVEN-ERE">MAVEN-ERE</a> 🤩🤩🤩</h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://arxiv.org/pdf/2211.07342">https://arxiv.org/pdf/2211.07342</a></p>
+<p><strong>Data Distribution:</strong> - 4,480 documents - 168
+fine-grained event types - 112,276 mentions - 103,193 event coreference
+chains - 1,216,217 temporal relations (BEFORE, OVERLAP, CONTAINS,
+SIMULTANEOUS, BEGINS-ON, ENDS-ON) - 15,841 subevent relations - 57,992
+causal relations (CAUSE, PRECONDITION)</p>
+<p><strong>Data Format:</strong> <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;f28bce270df5a122c09365002d247e76&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// an unique string for each document</span><br>  <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;United States occupation of Nicaragua&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// the tiltle of the document</span><br>  <span class="hljs-attr">&quot;tokens&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// a list for tokenized document content. each item is a tokenized sentence</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;The&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;United&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;States&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;occupation&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;of&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Nicaragua&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;from&quot;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-string">&quot;1912&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;to&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;1933&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;was&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;part&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;of&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;the&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Banana&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Wars&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;,&quot;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-string">&quot;when&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;the&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;US&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;military&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;intervened&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;in&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;various&quot;</span><span class="hljs-punctuation">,</span> <br>    <span class="hljs-string">&quot;Latin&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;American&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;countries&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;from&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;1898&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;to&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;1934&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;.&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;sentences&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// untokenized sentences of the document. each item is a sentence (string)</span><br>      <span class="hljs-string">&quot;The United States occupation of Nicaragua from 1912 to 1933 was part of the Banana Wars, when the US military intervened in various Latin American countries from 1898 to 1934.&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;events&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// a list for annotated events, each item is a dict for an event (coreference chain)</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;EVENT_0341c5cced5545ffe7c543b7a155bfa8&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// an unique string for the event (coreference chain)</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Choosing&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// the event type</span><br>            <span class="hljs-attr">&quot;type_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">25</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// the numerical id for the event type, consistent with MAVEN</span><br>            <span class="hljs-attr">&quot;mention&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// a list for the coreferential event mentions of the chain, each item is a dict. they have coreference relations to each other</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;a75ba55cadad23555a0ffc9454088687&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// an unique string for the event mention</span><br>                    <span class="hljs-attr">&quot;trigger_word&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;assumed&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// a string of the trigger word or phrase</span><br>                    <span class="hljs-attr">&quot;sent_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// the index of the corresponding sentence, starts with 0</span><br>                    <span class="hljs-attr">&quot;offset&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-number">2</span><span class="hljs-punctuation">]</span> <span class="hljs-comment">// the offset of the trigger words in the tokens list</span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;TIMEX&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// a list for annotated temporal expressions (TIMEX), each item is a dict for a TIMEX</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;TIME_833e41f3304210094101eca59905055e&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// an unique string for the TIMEX</span><br>      <span class="hljs-attr">&quot;mention&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1912&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// a string of the mention of the TIMEX</span><br>      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;DATE&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// the type of the TIMEX</span><br>      <span class="hljs-attr">&quot;sent_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// the index of the corresponding sentence, starts with 0</span><br>      <span class="hljs-attr">&quot;offset&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">8</span><span class="hljs-punctuation">]</span> <span class="hljs-comment">// the offset of the trigger words in the tokens list</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;temporal_relations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span> <span class="hljs-comment">// a list for annotated temporal relations between events (and TIMEXs)</span><br>    <span class="hljs-attr">&quot;BEFORE&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// a list for temporal relations of BEFORE type</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;TIME_id_2&quot;</span><span class="hljs-punctuation">]</span> <span class="hljs-comment">// a temporal relation instance, means EVENT_id_1 BEFORE TIME_id_2</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;OVERLAP&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// all the following types are similar</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;CONTAINS&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;SIMULTANEOUS&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;ENDS-ON&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;BEGINS-ON&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;causal_relations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span> <span class="hljs-comment">// a list for annotated causal relations between events</span><br>    <span class="hljs-attr">&quot;CAUSE&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>  <span class="hljs-comment">// a list for causal relations of CAUSE type</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span> <span class="hljs-comment">// a causal relation instance, means EVENT_id_1 CAUSE EVENT_id_2</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;PRECONDITION&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// the PRECONDITION type is similar</span><br>      <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;subevent_relations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// a list for annotated subevent relations between events</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;EVENT_id_1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;EVENT_id_2&quot;</span><span class="hljs-punctuation">]</span> <span class="hljs-comment">// a subevent relation instance, means EVENT_id_2 is a subevent of EVENT_id_1</span><br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="choice-of-plausible-alternatives-copa">2.<a
+target="_blank" rel="noopener" href="https://asgordon.github.io/copa.html">Choice of Plausible
+Alternatives (COPA)</a></h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://asgordon.github.io/publications/AAAI-SPRING11A.PDF">https://asgordon.github.io/publications/AAAI-SPRING11A.PDF</a></p>
+<p><strong>Data Distribution:</strong> - 1000 groups - each group has 2
+relations, one is correct and the other is false. - only 2 types of
+relation (cause, effect)</p>
+<p><strong>Data Format:</strong> <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">item</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">asks-for</span>=<span class="hljs-string">&quot;cause&quot;</span> <span class="hljs-attr">most-plausible-alternative</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>The women met for coffee.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">a1</span>&gt;</span>The cafe reopened in a new location.<span class="hljs-tag">&lt;/<span class="hljs-name">a1</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">a2</span>&gt;</span>They wanted to catch up with each other.<span class="hljs-tag">&lt;/<span class="hljs-name">a2</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">item</span>&gt;</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="e-care">3. <a
+target="_blank" rel="noopener" href="https://github.com/Waste-Wood/e-CARE?tab=readme-ov-file">e-CARE</a></h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://arxiv.org/pdf/2205.05849">https://arxiv.org/pdf/2205.05849</a></p>
+<p><strong>Data Distribution:</strong> - 21,324 groups (7,617 groups of
+cause relation and 7,311 groups of effect relation) - each group has 2
+relations (one is correct and the other is false) and a explanation.</p>
+<p><strong>Data Format:</strong> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs jsonl">&#123;&quot;index&quot;: &quot;train-0&quot;, <br>&quot;premise&quot;: &quot;There is a light rain today.&quot;, <br>&quot;ask-for&quot;: &quot;effect&quot;, <br>&quot;hypothesis1&quot;: &quot;The roots of many plants are not moistened by rain.&quot;, <br>&quot;hypothesis2&quot;: &quot;Tourists have seen many ripples.&quot;, <br>&quot;label&quot;: 0&#125;<br><br>&#123;&quot;index&quot;: &quot;train-0&quot;, <br>&quot;cause&quot;: &quot;There is a light rain today.&quot;, <br>&quot;effect&quot;: &quot;The roots of many plants are not moistened by rain.&quot;, <br>&quot;conceptual_explanation&quot;: &quot;Precipitation reaches soil surfaces.&quot;&#125;<br></code></pre></td></tr></table></figure></p>
+<h2 id="esl">4. <a
+target="_blank" rel="noopener" href="https://github.com/tommasoc80/EventStoryLine?tab=readme-ov-file">ESL</a>
+🤩🤩</h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://aclanthology.org/W17-2711.pdf">https://aclanthology.org/W17-2711.pdf</a></p>
+<p><strong>Data Distribution:</strong> - 258 documents with 22 topics -
+7,275 event mentions - three types of relations (Temporal, Co-Reference,
+Plot) - Temporal relation can be divided into contains, before, after
+and overlap.</p>
+<h2 id="ctb">5. <a
+target="_blank" rel="noopener" href="https://github.com/paramitamirza/Causal-TimeBank">CTB</a>
+🤩🤩</h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://aclanthology.org/W14-0702.pdf">https://aclanthology.org/W14-0702.pdf</a></p>
+<p><strong>Data Distribution:</strong> - 6,811 EVENTs (only instantiated
+events by MAKEINSTANCE tag of TimeML) - 5,118 TLINKs (temporal links) -
+171 CSIGNALs (causal signals) - 318 CLINKs (causal links)</p>
+<h2 id="meci">6. <a
+target="_blank" rel="noopener" href="https://github.com/nlp-uoregon/meci-dataset">MECI</a> 🤩🤩🤩</h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://aclanthology.org/2022.coling-1.206.pdf">https://aclanthology.org/2022.coling-1.206.pdf</a></p>
+<p><strong>Data Distribution:</strong> - 5 languages, 5 topics, more
+than 1,000 articles per topic for each language - the annotation method
+is same as ESL</p>
+<p><strong>Data Format:</strong> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs tsvx">Text	The policy document sets out what must be done to deliver a global response &quot; that leaves no - one behind &quot; , reduces global vulnerability to future pandemics , builds resilience to future shocks , especially climate change , and addresses &quot; the severe and systemic inequalities exposed by the pandemic &quot; .	The document focuses on three main operational approaches , namely delivering a large coordinated and comprehensive response on health ; adopting policies to address the adverse human rights , humanitarian , and socioeconomic , humanitarian effects ; and creating a recovery process that &quot; builds back better &quot; .	As part of the United Nations &#x27; response , the UN Secretary - General has been prominent in ensuring the maintenance of normal UN operations , in launching events , and making in appeals on behalf of the United Nations System , including for the world &#x27;s first global ceasefire and for billions of dollars in funding .	He has also defended the WHO &#x27;s response to the crisis and fought back against COVID - 19 misinformation .	As the UN &#x27;s response became more systematized , he been issuing policy briefs , by theme , population , and region , to aid governments in how to address the consequences of the pandemic .<br><br>Event	T0	done	EVENT	42<br>Event	T1	deliver	EVENT	50<br>Event	T10	pandemic	EVENT	294<br>Event	T11	focuses	EVENT	320<br><br>Relation	T4	T29	CauseEffect	true	reduces	sets out<br>Relation	T29	T4	EffectCause	true	sets out	reduces<br>Relation	T9	T21	NoRel	true	exposed	fought<br>Relation	T9	T3	NoRel	true	exposed	leaves<br></code></pre></td></tr></table></figure></p>
+<h2 id="hieve">7. <a
+target="_blank" rel="noopener" href="http://takelab.fer.hr/hievents.rar">HiEve</a></h2>
+<h5 id="没有找到数据集">没有找到数据集</h5>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="http://www.lrec-conf.org/proceedings/lrec2014/pdf/1023_Paper.pdf">http://www.lrec-conf.org/proceedings/lrec2014/pdf/1023_Paper.pdf</a></p>
+<h2 id="matres">8. MATRES</h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://arxiv.org/pdf/1804.07828">https://arxiv.org/pdf/1804.07828</a></p>
+<p><strong>Data Format:</strong> <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt">WSJ_20130322_159	apologized	happened	1	5	VAGUE<br>WSJ_20130322_159	apologized	wrapped	1	6	BEFORE<br>WSJ_20130322_159	apologized	seemed	1	10	BEFORE<br></code></pre></td></tr></table></figure></p>
+<h2 id="tddiscourse">9. <a
+target="_blank" rel="noopener" href="https://github.com/aakanksha19/TDDiscourse">TDDiscourse</a>
+🤩🤩</h2>
+<p><strong>Paper:</strong> <a
+target="_blank" rel="noopener" href="https://aclanthology.org/W19-5929.pdf">https://aclanthology.org/W19-5929.pdf</a></p>
+<p><strong>Data Distribution:</strong> - Expand from TimeBank (contains
+more temopral links), contains 6,150 relation pairs in TDD-Man and about
+38,000 relation pairs in TDD-Auto - it contains more long distiance
+relation mentions (很多数据集只标注近距离的trigger words之间的关系) -
+relations include after, before, simultaneous, include and
+is-included</p>
+<p><strong>Data Format:</strong> <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt">APW19980227.0468	e1	e8	ii<br>APW19980227.0468	e1	e9	ii<br>APW19980227.0468	e1	e10	a<br></code></pre></td></tr></table></figure></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/NLP/" class="category-chain-item">NLP</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/datasets/" class="print-no-link">#datasets</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Event-Event Relation Extraction Datasets</div>
+      <div>http://example.com/2024/07/31/event-to-event-relation-extraction-dataset/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yan Wang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 31, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/24/%E5%85%B3%E4%BA%8E%E5%BD%92%E4%B8%80%E5%8C%96%20(Normalization)/" title="归一化(Normalization)的一些方法">
+                        <span class="hidden-mobile">归一化(Normalization)的一些方法</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

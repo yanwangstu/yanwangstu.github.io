@@ -1,0 +1,813 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.svg">
+  <link rel="icon" href="/img/icon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yan Wang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="行归一化 (矩阵行L1范数 or 矩阵行L2范数为1)  计算行范数：首先计算原矩阵每一行的\(L_2\)范数。 创建范数矩阵：将这些范值构成一个对角矩阵\(D\)，其中对角线上的元素是原矩阵的行范数，非对角线上的元素是0。 逆范数矩阵：计算对角矩阵\(D\)的逆矩阵\(D^{-1}\)，其对角线上的元素是对应行范数的倒数。 矩阵相乘：将原矩阵\(M\)与逆范数矩阵\(D^{-1}\)相乘，得到归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="归一化(Normalization)的一些方法">
+<meta property="og:url" content="http://example.com/2024/07/24/%E5%85%B3%E4%BA%8E%E5%BD%92%E4%B8%80%E5%8C%96%20(Normalization)/index.html">
+<meta property="og:site_name" content="Yan Wang&#39;s Blog">
+<meta property="og:description" content="行归一化 (矩阵行L1范数 or 矩阵行L2范数为1)  计算行范数：首先计算原矩阵每一行的\(L_2\)范数。 创建范数矩阵：将这些范值构成一个对角矩阵\(D\)，其中对角线上的元素是原矩阵的行范数，非对角线上的元素是0。 逆范数矩阵：计算对角矩阵\(D\)的逆矩阵\(D^{-1}\)，其对角线上的元素是对应行范数的倒数。 矩阵相乘：将原矩阵\(M\)与逆范数矩阵\(D^{-1}\)相乘，得到归">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-24T12:07:22.225Z">
+<meta property="article:modified_time" content="2024-08-08T12:13:03.955Z">
+<meta property="article:author" content="Yan Wang">
+<meta property="article:tag" content="数据归一化">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>归一化(Normalization)的一些方法 - Yan Wang&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"pZ0EE7gT8tJRoYK1puEQzIy4-gzGzoHsz","app_key":"D5vg3ofAivBJWAo15xNUlCe3","server_url":"https://pz0ee7gt.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yan Wang&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle">归一化(Normalization)的一些方法</span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-24 20:07" pubdate>
+          July 24, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          933 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">归一化(Normalization)的一些方法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="行归一化">行归一化</h1>
+<h2 id="矩阵行l1范数-or-矩阵行l2范数为1">(矩阵行L1范数 or
+矩阵行L2范数为1)</h2>
+<ol type="1">
+<li><p><strong>计算行范数</strong>：首先计算原矩阵每一行的<span
+class="math inline">\(L_2\)</span>范数。</p></li>
+<li><p><strong>创建范数矩阵</strong>：将这些范值构成一个对角矩阵<span
+class="math inline">\(D\)</span>，其中对角线上的元素是原矩阵的行范数，非对角线上的元素是0。</p></li>
+<li><p><strong>逆范数矩阵</strong>：计算对角矩阵<span
+class="math inline">\(D\)</span>的逆矩阵<span
+class="math inline">\(D^{-1}\)</span>，其对角线上的元素是对应行范数的倒数。</p></li>
+<li><p><strong>矩阵相乘</strong>：将原矩阵<span
+class="math inline">\(M\)</span>与逆范数矩阵<span
+class="math inline">\(D^{-1}\)</span>相乘，得到归一化后的矩阵<span
+class="math inline">\(M_{\text{norm}}\)</span>。</p></li>
+</ol>
+<p>数学上，如果<span class="math inline">\(M\)</span>是原始矩阵，<span
+class="math inline">\(D\)</span>是行范数构成的对角矩阵，那么归一化后的矩阵<span
+class="math inline">\(M_{\text{norm}}\)</span>可以通过以下公式计算：
+<span class="math display">\[M_{\text{norm}} = M \cdot
+D^{-1}\]</span></p>
+<h1 id="对称归一化">对称归一化</h1>
+<h2
+id="矩阵行与列l1范数均为1-or-矩阵行与列l2范数均为1">(矩阵行与列L1范数均为1
+or 矩阵行与列L2范数均为1)</h2>
+<p><span class="math inline">\(D^{-1/2} A
+D^{-1/2}\)</span>这种归一化方法通常被称为对称归一化（symmetric
+normalization）或双归一化（double
+normalization），它在数学和机器学习领域中有着特定的应用和效果。下面是这种归一化方法的详细说明和效果：</p>
+<h3 id="归一化过程">归一化过程：</h3>
+<ol type="1">
+<li><p><strong>构建对角矩阵<span
+class="math inline">\(D\)</span></strong>：首先，计算矩阵<span
+class="math inline">\(A\)</span>的行<span
+class="math inline">\(L_2\)</span>范数，用这些范数构建对角矩阵$D
+)。</p></li>
+<li><p><strong>计算<span
+class="math inline">\(D^{-1/2}\)</span></strong>：接着，计算<span
+class="math inline">\(D\)</span>的逆矩阵的平方根，即<span
+class="math inline">\(D^{-1/2}\)</span>。这个操作将每个行范数取倒数再开平方。</p></li>
+<li><p><strong>归一化操作</strong>：通过矩阵乘法<span
+class="math inline">\(D^{-1/2} A D^{-1/2}\)</span>对<span
+class="math inline">\(A\)</span>进行操作。</p></li>
+</ol>
+<h3 id="达到的效果">达到的效果：</h3>
+<ol type="1">
+<li><p><strong>行和列的<span
+class="math inline">\(L_2\)</span>范数归一化</strong>：归一化后的矩阵<span
+class="math inline">\(A\)</span>中，每一行和每一列的<span
+class="math inline">\(L_2\)</span>范数都被缩放至1。这意味着矩阵<span
+class="math inline">\(A\)</span>中的每个向量（行和列）都变成了单位向量。</p></li>
+<li><p><strong>数值稳定性</strong>：这种归一化可以提高数值计算的稳定性，因为它减少了由于某些行或列具有较大数值而导致的数值问题。</p></li>
+<li><p><strong>特征值和奇异值的缩放</strong>：归一化后的矩阵<span
+class="math inline">\(A\)</span>的特征值和奇异值通常会被缩放至更小的范围，这有助于某些算法的性能和数值稳定性。</p></li>
+<li><p><strong>数据预处理</strong>：在机器学习和数据分析中，这种归一化可以作为数据预处理的步骤，确保不同的特征具有相同的尺度，有助于算法的收敛和性能。</p></li>
+<li><p><strong>对称性保持</strong>：如果矩阵<span
+class="math inline">\(A\)</span>是对称的，这种归一化方法保持了矩阵的对称性。</p></li>
+<li><p><strong>改善条件数</strong>：通过缩放行和列，可以改善矩阵<span
+class="math inline">\(A\)</span>的条件数，即最大奇异值与最小奇异值的比率。一个较小的条件数意味着矩阵更接近于正交矩阵，数值解法更稳定。</p></li>
+<li><p><strong>在谱聚类中的应用</strong>：在谱聚类算法中，这种归一化方法常用于预处理相似性矩阵或拉普拉斯矩阵，以提高算法的效率和效果。</p></li>
+</ol>
+<h3 id="数学解释">数学解释：</h3>
+<p>归一化操作<span class="math inline">\(D^{-1/2} A
+D^{-1/2}\)</span>等价于先将<span
+class="math inline">\(A\)</span>的每一行通过<span
+class="math inline">\(D^{-1/2}\)</span>进行缩放，使得它们成为单位向量，然后对每一列也进行相同的操作。数学上，这可以表示为：</p>
+<p><span class="math display">\[D^{-1/2} A D^{-1/2} = \left( D^{-1/2}
+A^T D^{-1/2} \right)^T\]</span></p>
+<p>这意味着操作是对称的，即先对行操作再对列操作，或者先对列操作再对行操作，结果是相同的。</p>
+<p>这种归一化方法在理论和实际应用中都很有用，特别是在需要处理矩阵特性（如特征值、奇异值、条件数）的算法中。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Basics-Theory/" class="category-chain-item">Basics Theory</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BD%92%E4%B8%80%E5%8C%96/" class="print-no-link">#数据归一化</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>归一化(Normalization)的一些方法</div>
+      <div>http://example.com/2024/07/24/关于归一化 (Normalization)/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yan Wang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>July 24, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/31/event-to-event-relation-extraction-dataset/" title="Event-Event Relation Extraction Datasets">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Event-Event Relation Extraction Datasets</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/12/Instruction/Instruction/" title="Instruction of Deploy a Blog through Github Pages and Hexo">
+                        <span class="hidden-mobile">Instruction of Deploy a Blog through Github Pages and Hexo</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
