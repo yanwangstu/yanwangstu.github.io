@@ -16,12 +16,12 @@
   <meta name="author" content="Yan Wang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. Graph Neuron Networks (GNNs) 思路： 巴拿赫不动点理论 (Banach&#39;s Fixed Point Theory) 为模型提供了理论依据。 模型架构： 其输入为一张用向量标注的无向图\(G&#x3D;(V, E)\)（每个结点和边均被提前embedding为\(d\)维），进行多轮更新得到中间输出\(H^{output}\)，中间输出\(h^{output}_v\)为表示">
+    <meta name="description" content="1. Graph Neuron Networks (GNNs) 思路： 巴拿赫不动点理论 (Banach&#39;s Fixed Point Theory) 为模型提供了理论依据。 模型架构： 其输入为一张用向量标注的无向图\(G&#x3D;(V, E)\)（每个结点和边均被提前embedding为\(d\)维），进行多轮更新得到中间输出\(H^{output}\)，中间输出\(h^{output}_v\)为表示图">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Yan Wang&#39;s Blog">
+<meta property="og:title" content="图神经网络总结">
 <meta property="og:url" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/index.html">
 <meta property="og:site_name" content="Yan Wang&#39;s Blog">
-<meta property="og:description" content="1. Graph Neuron Networks (GNNs) 思路： 巴拿赫不动点理论 (Banach&#39;s Fixed Point Theory) 为模型提供了理论依据。 模型架构： 其输入为一张用向量标注的无向图\(G&#x3D;(V, E)\)（每个结点和边均被提前embedding为\(d\)维），进行多轮更新得到中间输出\(H^{output}\)，中间输出\(h^{output}_v\)为表示">
+<meta property="og:description" content="1. Graph Neuron Networks (GNNs) 思路： 巴拿赫不动点理论 (Banach&#39;s Fixed Point Theory) 为模型提供了理论依据。 模型架构： 其输入为一张用向量标注的无向图\(G&#x3D;(V, E)\)（每个结点和边均被提前embedding为\(d\)维），进行多轮更新得到中间输出\(H^{output}\)，中间输出\(h^{output}_v\)为表示图">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/o_image-10-gcn-framework.png">
 <meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/2381773f90e146868d4f6d0b4990813f.png">
@@ -30,14 +30,15 @@
 <meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/%E6%9C%AA%E5%91%BD%E5%90%8D2.jpg">
 <meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/%E6%9C%AA%E5%91%BD%E5%90%8D-4.jpg">
 <meta property="article:published_time" content="2024-08-08T13:09:52.727Z">
-<meta property="article:modified_time" content="2024-08-08T13:09:52.727Z">
+<meta property="article:modified_time" content="2024-08-08T13:22:59.664Z">
 <meta property="article:author" content="Yan Wang">
+<meta property="article:tag" content="summary">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/o_image-10-gcn-framework.png">
   
   
   
-  <title>Yan Wang&#39;s Blog</title>
+  <title>图神经网络总结 - Yan Wang&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -232,7 +233,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle"></span>
+            <span id="subtitle">图神经网络总结</span>
           
         </div>
 
@@ -311,13 +312,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header"></h1>
+            <h1 id="seo-header">图神经网络总结</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="section"></h1>
-<h1 id="graph-neuron-networks-gnns">1. Graph Neuron Networks (GNNs)</h1>
+                <h1 id="graph-neuron-networks-gnns">1. Graph Neuron Networks (GNNs)</h1>
 <p><strong>思路：</strong> 巴拿赫不动点理论 (Banach's Fixed Point
 Theory) 为模型提供了理论依据。</p>
 <p><strong>模型架构：</strong> 其输入为一张用向量标注的无向图<span
@@ -360,7 +360,7 @@ class="math inline">\(FNN\)</span>参数是相通的，所以需要使用Almeida
 <p><strong>Shortcomings：</strong> - 存在oversommothing问题 -
 没有完全将边和结点分开，在全连接层中边和结点的地位是等价的 -
 此模型如果用于处理有向图，无法考虑图的边是入边还是出边，此模型对于某一特定结点，其入边和出边地位是等同的。</p>
-<h1 id="section-1"></h1>
+<h1 id="section"></h1>
 <h1 id="convolutional-graph-neuron-networks-convgnns">2. Convolutional
 Graph Neuron Networks (ConvGNNs)</h1>
 <p><strong>思路：</strong>
@@ -404,7 +404,7 @@ alt="ConvGNNs" />
 <p><strong>Shortcomings：</strong> -
 此模型在每一层的计算中只考虑到了与其相邻的结点，没有考虑与其可达但不相邻的结点的信息，使其“感受野”受到一定的限制
 - 同GNN，如果用于处理有向图，无法充分使用有向图的入边出边信息。</p>
-<h1 id="section-2"></h1>
+<h1 id="section-1"></h1>
 <h1 id="recurrent-graph-neural-networks-recgnns">3. Recurrent Graph
 Neural Networks (RecGNNs)</h1>
 <h2 id="gated-graph-neuron-networks-ggnns">(1) Gated Graph Neuron
@@ -444,7 +444,7 @@ h^{(k)}_1;...h^{(k)}_{|{\mathcal{V}}|}]\)</span>，再经过一些输出层即�
 但是感觉将如此复杂的模型用于如此简单的任务有小题大作之嫌 <img
 src="../_resources/未命名-5.jpg" srcset="/img/loading.gif" lazyload style="width:90.0%"
 alt="GATED GRAPH SEQUENCE NEURAL NETWORKS" /></p>
-<h1 id="section-3"></h1>
+<h1 id="section-2"></h1>
 <h1 id="graph-autoencoders-gaes">4. Graph Autoencoders (GAEs)</h1>
 <h2 id="basic-gaes">(1) Basic GAEs<a href="#fn1" class="footnote-ref"
 id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
@@ -494,7 +494,7 @@ class="math inline">\(A_{ij}\)</span>的值。</p>
 本文中应用KL散度于损失函数中，但目前对损失函数的理论依据不太了解 -
 本文中化器用Adam ## (2) GAEs for network embedding ## (3) GAEs for graph
 generation</p>
-<h1 id="section-4"></h1>
+<h1 id="section-3"></h1>
 <h1 id="spatial-temporal-graph-neural-networks-stgnns">5.
 Spatial-Temporal Graph Neural Networks (STGNNs)</h1>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
@@ -514,6 +514,34 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="category-chain-item">图神经网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/summary/" class="print-no-link">#summary</a>
+      
+    </div>
   
 </div>
 
@@ -523,7 +551,7 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
+      <div>图神经网络总结</div>
       <div>http://example.com/2024/08/08/Different Paradigms of Graph Neuron Network/Different Paradigms of Graph Neuron Network/</div>
     </div>
     <div class="license-meta">
@@ -572,8 +600,8 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/" title="">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/" title="Event-Event Relation Extraction">
+                        <span class="hidden-mobile">Event-Event Relation Extraction</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -630,6 +658,12 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -833,6 +867,49 @@ href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script defer src="/js/leancloud.js" ></script>
 
