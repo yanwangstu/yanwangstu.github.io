@@ -1,0 +1,856 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.svg">
+  <link rel="icon" href="/img/icon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yan Wang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. Graph Neuron Networks (GNNs) 思路： 巴拿赫不动点理论 (Banach&#39;s Fixed Point Theory) 为模型提供了理论依据。 模型架构： 其输入为一张用向量标注的无向图\(G&#x3D;(V, E)\)（每个结点和边均被提前embedding为\(d\)维），进行多轮更新得到中间输出\(H^{output}\)，中间输出\(h^{output}_v\)为表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yan Wang&#39;s Blog">
+<meta property="og:url" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/index.html">
+<meta property="og:site_name" content="Yan Wang&#39;s Blog">
+<meta property="og:description" content="1. Graph Neuron Networks (GNNs) 思路： 巴拿赫不动点理论 (Banach&#39;s Fixed Point Theory) 为模型提供了理论依据。 模型架构： 其输入为一张用向量标注的无向图\(G&#x3D;(V, E)\)（每个结点和边均被提前embedding为\(d\)维），进行多轮更新得到中间输出\(H^{output}\)，中间输出\(h^{output}_v\)为表示">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/o_image-10-gcn-framework.png">
+<meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/2381773f90e146868d4f6d0b4990813f.png">
+<meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/%E6%9C%AA%E5%91%BD%E5%90%8D-3.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/%E6%9C%AA%E5%91%BD%E5%90%8D-2.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/%E6%9C%AA%E5%91%BD%E5%90%8D2.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/%E6%9C%AA%E5%91%BD%E5%90%8D-4.jpg">
+<meta property="article:published_time" content="2024-08-08T13:09:52.727Z">
+<meta property="article:modified_time" content="2024-08-08T13:09:52.727Z">
+<meta property="article:author" content="Yan Wang">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/o_image-10-gcn-framework.png">
+  
+  
+  
+  <title>Yan Wang&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"pZ0EE7gT8tJRoYK1puEQzIy4-gzGzoHsz","app_key":"D5vg3ofAivBJWAo15xNUlCe3","server_url":"https://pz0ee7gt.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yan Wang&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-08 21:09" pubdate>
+          August 8, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="section"></h1>
+<h1 id="graph-neuron-networks-gnns">1. Graph Neuron Networks (GNNs)</h1>
+<p><strong>思路：</strong> 巴拿赫不动点理论 (Banach's Fixed Point
+Theory) 为模型提供了理论依据。</p>
+<p><strong>模型架构：</strong> 其输入为一张用向量标注的无向图<span
+class="math inline">\(G=(V,
+E)\)</span>（每个结点和边均被提前embedding为<span
+class="math inline">\(d\)</span>维），进行多轮更新得到中间输出<span
+class="math inline">\(H^{output}\)</span>，中间输出<span
+class="math inline">\(h^{output}_v\)</span>为表示图中结点的相关隐含信息向量，最终输出<span
+class="math inline">\(O\)</span>为图中结点类别信息。 （从<span
+class="math inline">\(h^{output}_v\)</span>到<span
+class="math inline">\(o^v\)</span>可以先将<span
+class="math inline">\(h^{output}_v\)</span>和<span
+class="math inline">\(x_v\)</span>拼接，然后加全连接层输出类别概率再使用softmax，最后进行argmax操作）</p>
+<p>模型更新次数并不是固定的，在每一轮更新中，此模型对所有结点进行以下操作（将前馈神经网络的输出相加）：
+<span class="math display">\[h^{t+1}_{v} = f(x_v, x_co[v], h^t_ne[v],
+x_ne[v])=\sum_{u\in ne[v]}FNN([x_v, x_{(u,v)},h^t_u,x_u]) \]</span>
+其中，<span class="math inline">\(h^{t+1}_{v}\)</span>表示结点<span
+class="math inline">\(v\)</span>在<span
+class="math inline">\(t+1\)</span>时刻的隐状态，<span
+class="math inline">\(x_v, x_co[v]\)</span>分别表示结点<span
+class="math inline">\(v\)</span>和与结点<span
+class="math inline">\(v\)</span>相连的点的输入embedding，<span
+class="math inline">\(h^t_ne[v]\)</span>表示结点<span
+class="math inline">\(v\)</span>相连的点在<span
+class="math inline">\(t\)</span>时刻的隐状态，<span
+class="math inline">\(x_ne[v]\)</span>表示与结点<span
+class="math inline">\(v\)</span>相连的边的输入embedding。</p>
+<p>当<span
+class="math inline">\(||H^{t+1}||_2-||H^{t}||_2&lt;\epsilon\)</span>时，终止更新得到输出<span
+class="math inline">\(h^{output}_v=h^v_{t+1}\)</span> <img
+src="IMG_B14C45EDF889-1.jpeg" srcset="/img/loading.gif" lazyload style="width:70.0%" alt="GNNs" /></p>
+<p><strong>Loss function and optimaization：</strong> 基于Banach's Fixed
+Point
+Theory，可以提出有约束优化，然后通过拉格朗日乘数法转化为无约束优化。
+<span class="math display">\[J=Loss + \lambda \cdot max(||\frac{\partial
+FNN}{\partial \mathbf{h}}||-c, 0), c\in (0,1)\]</span></p>
+<p>在优化器方面，因为模型存在“参数共享”，即所有的<span
+class="math inline">\(FNN\)</span>参数是相通的，所以需要使用Almeida-Pineda
+算法更新参数信息。（参数共享的原因即为了方便处理多样化结构的图，只需要它们的embedding维度一致即可）</p>
+<p><strong>Shortcomings：</strong> - 存在oversommothing问题 -
+没有完全将边和结点分开，在全连接层中边和结点的地位是等价的 -
+此模型如果用于处理有向图，无法考虑图的边是入边还是出边，此模型对于某一特定结点，其入边和出边地位是等同的。</p>
+<h1 id="section-1"></h1>
+<h1 id="convolutional-graph-neuron-networks-convgnns">2. Convolutional
+Graph Neuron Networks (ConvGNNs)</h1>
+<p><strong>思路：</strong>
+ConvGNNs本质上受启发与CV领域的对图像进行卷积操作。但是在某一定义下，图像的邻居较为规则，结合邻居结点的信息进行卷积操作也非常简单可行，然而Graphs却结构较为多样，所以需要对其进行修改，让其可以充分使用邻居结点的信息。</p>
+<p><strong>模型架构：</strong>
+输入一张无向图的结点embedding信息和adjacency matrix，即<span
+class="math inline">\((H^{(0)},
+A)\)</span>，中间输出图中所有结点的状态向量，最后输出结点的类别or图的类别信息，其中<span
+class="math inline">\(H^{(0)}\)</span>的第<span
+class="math inline">\(i\)</span>行为结点<span
+class="math inline">\(i\)</span>的<span
+class="math inline">\(d\)</span>维embedding向量。</p>
+<p>模型层数固定，每一层参数互不共享，第<span
+class="math inline">\(i+1\)</span>层计算方法如下： <span
+class="math display">\[H^{(i+1)}=f_{i+1}(H^{(i)},A)=\sigma\left(\hat{D}^{-\frac12}\hat{A}\hat{D}^{-\frac12}H^{(i)}W^{(i)}\right)\]</span>
+- <span
+class="math inline">\(\hat{A}=A+I\)</span>,使得更新时考虑到自己在上一时刻的信息
+- <span class="math inline">\(\hat{D}\)</span>中除对角线上元素为<span
+class="math inline">\(\hat{A}\)</span>对应行的<span
+class="math inline">\(L1\)</span>范数，其余元素均为0，<span
+class="math inline">\(\hat{D}^{-\frac12}\hat{A}\hat{D}^{-\frac12}\)</span>用于对表示相邻关系的矩阵进行symmetric
+normalization (对称归一化)，使得all colums and rows的<span
+class="math inline">\(L1\)</span>范数为1 - <span
+class="math inline">\(\sigma\)</span>为激活函数，按位激活 - <span
+class="math inline">\(T=
+\hat{D}^{-\frac12}\hat{A}\hat{D}^{-\frac12}H^{(i)}\)</span>即求结点相邻结点向量的平均值，<span
+class="math inline">\(T\)</span>的第<span
+class="math inline">\(i\)</span>行表示结点<span
+class="math inline">\(i\)</span>的相邻结点的隐状态向量与其自身的隐状态向量的加权平均值（其中各结点的权重即<span
+class="math inline">\(\hat{D}^{-\frac12}\hat{A}\hat{D}^{-\frac12}\)</span>的第<span
+class="math inline">\(i\)</span>行） - <span
+class="math inline">\(TW^{(i)}\)</span>可看作“卷积”操作</p>
+<figure>
+<img src="o_image-10-gcn-framework.png" srcset="/img/loading.gif" lazyload style="width:70.0%"
+alt="ConvGNNs" />
+<figcaption aria-hidden="true">ConvGNNs</figcaption>
+</figure>
+<p><strong>相关细节：</strong>
+在实际情况下，会使用类似于残差神经网络的结构，引入dropout，对Loss进行L2正则化处理,修改
+<span class="math inline">\(\hat{A}=A+\lambda I\)</span>等。</p>
+<p><strong>Shortcomings：</strong> -
+此模型在每一层的计算中只考虑到了与其相邻的结点，没有考虑与其可达但不相邻的结点的信息，使其“感受野”受到一定的限制
+- 同GNN，如果用于处理有向图，无法充分使用有向图的入边出边信息。</p>
+<h1 id="section-2"></h1>
+<h1 id="recurrent-graph-neural-networks-recgnns">3. Recurrent Graph
+Neural Networks (RecGNNs)</h1>
+<h2 id="gated-graph-neuron-networks-ggnns">(1) Gated Graph Neuron
+Networks (GGNNs)</h2>
+<p><strong>思路：</strong>
+GNN和ConvGNNs主要用于classification问题，在此基础上，GGNNs被提出，其对类似于LSTM的GRU模块进行改变并加入模型。（GRU可看作LSTM的一种优化，可以用于捕捉长距离的依赖关系，用于解决一些序列输出问题）</p>
+<figure>
+<img src="2381773f90e146868d4f6d0b4990813f.png" srcset="/img/loading.gif" lazyload style="width:70.0%"
+alt="GRU模块" />
+<figcaption aria-hidden="true">GRU模块</figcaption>
+</figure>
+<p><strong>模型架构：</strong> 其输入为一张每一个结点均用<span
+class="math inline">\(d\)</span>维向量标注的有向图<span
+class="math inline">\(G=(V, E)\)</span>， 模型具有<span
+class="math inline">\(K\)</span>层，第一层即对所有结点如(1)初始化隐状态（<span
+class="math inline">\(v\)</span>表示结点编号），第二层以后每层类GRU模块数等于输入结点数，第<span
+class="math inline">\(t\)</span>层（<span
+class="math inline">\(t\)</span>大于1）的第<span
+class="math inline">\(v\)</span>个类GRU模块计算公式如(2)-(6)所示。</p>
+<figure>
+<img src="未命名-3.jpg" srcset="/img/loading.gif" lazyload style="width:100.0%" alt="GGNNs计算公式" />
+<figcaption aria-hidden="true">GGNNs计算公式</figcaption>
+</figure>
+<p>其中<span class="math inline">\(A_v\)</span>是从<span
+class="math inline">\(A\)</span>中截取出来的两列组成的矩阵，截取outgoing
+edges的第<span class="math inline">\(v\)</span>列和incoming
+edges的第<span class="math inline">\(v\)</span>列。</p>
+<p><img src="未命名-2.jpg" srcset="/img/loading.gif" lazyload style="width:70.0%" alt="矩阵A的含义" />
+经过<span class="math inline">\(K\)</span>层得到<span
+class="math inline">\(H=[h^{(k)}_1; h^{(k)}_2;
+h^{(k)}_1;...h^{(k)}_{|{\mathcal{V}}|}]\)</span>，再经过一些输出层即可得到模型输出。</p>
+<p><strong>特点：</strong> - 可以处理有向图 -
+使用GRU模块的变体，助于网络学习长期依赖关系 -
+类GRU模块参数也是共享的，本文使用Adam进行optimization</p>
+<p><strong>另一个类似的模型：</strong>
+此模型可以用于处理与图有关的序列问题。 eg：输出两点间的最短路径序列
+但是感觉将如此复杂的模型用于如此简单的任务有小题大作之嫌 <img
+src="../_resources/未命名-5.jpg" srcset="/img/loading.gif" lazyload style="width:90.0%"
+alt="GATED GRAPH SEQUENCE NEURAL NETWORKS" /></p>
+<h1 id="section-3"></h1>
+<h1 id="graph-autoencoders-gaes">4. Graph Autoencoders (GAEs)</h1>
+<h2 id="basic-gaes">(1) Basic GAEs<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
+<p><strong>思路：</strong>
+本模型源将图卷积神经网络与自编码模型相结合构造出可以用于图结点关系预测的模型。
+<img src="未命名2.jpg" srcset="/img/loading.gif" lazyload style="width:70.0%"
+alt="Traditional Autoencoder Model" />
+传统的自编码模型如上图所示，输入<span
+class="math inline">\(X\)</span>，输出<span
+class="math inline">\(\hat{X}\)</span>，即对X的估计。此模型可以用于词嵌入，图像特征提取，图像降噪增强等方面。</p>
+<p><strong>模型架构：</strong>
+此模型输入一张不完整的，可以添加link（无向边）的无向图<span
+class="math inline">\(G=(V, E)\)</span>，先得到图<span
+class="math inline">\(G\)</span>的结点embedding的<span
+class="math inline">\(N\times D\)</span>维矩阵<span
+class="math inline">\(X\)</span>与<span class="math inline">\(N\times
+N\)</span>维邻接矩阵<span class="math inline">\(A\)</span>。</p>
+<figure>
+<img src="未命名-4.jpg" srcset="/img/loading.gif" lazyload style="width:70.0%" alt="Basic GAEs" />
+<figcaption aria-hidden="true">Basic GAEs</figcaption>
+</figure>
+<p>然后进入encoder层（Paper中称为inference
+model）进行两层ConvGNN后并采样得到中间的latent variable，即<span
+class="math inline">\(N\times D\)</span>维矩阵<span
+class="math inline">\(Z\)</span>，encoder层具体计算方法如下所示。</p>
+<p><span
+class="math display">\[\widetilde{A}=D^{-\frac{1}{2}}AD^{-\frac{1}{2}}\]</span>
+- ecoder第一层： <span class="math display">\[\bar{X}  =
+ConvGNN(X,A)=ReLU(\widetilde{A}XW_0)\]</span> - encoder第二层： <span
+class="math display">\[\mu =
+ConvGNN_\mu(\bar{X},A)=\widetilde{A}\bar{X}W_1\]</span> <span
+class="math display">\[log\sigma =
+ConvGNN_\sigma(\bar{X},A)=\widetilde{A}\bar{X}W_2\]</span> -
+encoder计算Z的分布并采样： <span
+class="math display">\[Z_{var}=\mu+\sigma * \epsilon\]</span> <span
+class="math display">\[\epsilon\sim N(0,1)\]</span> 即<span
+class="math inline">\(Z_{var}  \sim N(\mu, \sigma^2)\)</span>
+然后对随机变量矩阵<span
+class="math inline">\(Z_{var}\)</span>采样得到<span
+class="math inline">\(Z\)</span></p>
+<p>最后通过decoder层（Paper中称为generative model）得到<span
+class="math inline">\(\hat{A}\)</span>，即补充完图中缺失的link后的邻接矩阵，，decoder层具体计算方法如下所示。
+<span class="math display">\[P(A_{ij}=1|\bold{z_i}, \bold{z_j}) =
+\sigma(\bold{z^T_i z_j})\]</span> 然后再通过特定的阈值推断<span
+class="math inline">\(A_{ij}\)</span>的值。</p>
+<p><strong>相关细节：</strong> -
+本文中应用KL散度于损失函数中，但目前对损失函数的理论依据不太了解 -
+本文中化器用Adam ## (2) GAEs for network embedding ## (3) GAEs for graph
+generation</p>
+<h1 id="section-4"></h1>
+<h1 id="spatial-temporal-graph-neural-networks-stgnns">5.
+Spatial-Temporal Graph Neural Networks (STGNNs)</h1>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li
+id="fn1"><p>https://towardsdatascience.com/tutorial-on-variational-graph-auto-encoders-da9333281129<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2024/08/08/Different Paradigms of Graph Neuron Network/Different Paradigms of Graph Neuron Network/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yan Wang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 8, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

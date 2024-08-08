@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/icon.svg">
+  <link rel="icon" href="/img/icon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yan Wang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Event-Event Relation Extraction 1. Related Definitions  事件： An event is an occurrence of societal importance, typically happening at a specific time and location, involving a set of participants. It c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yan Wang&#39;s Blog">
+<meta property="og:url" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/index.html">
+<meta property="og:site_name" content="Yan Wang&#39;s Blog">
+<meta property="og:description" content="Event-Event Relation Extraction 1. Related Definitions  事件： An event is an occurrence of societal importance, typically happening at a specific time and location, involving a set of participants. It c">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/GraphERE.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/GraphIE.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/%E6%9C%AA%E5%91%BD%E5%90%8D.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/11.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/MetaIE.jpg">
+<meta property="og:image" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/assets/Diffusion%20Model.jpg">
+<meta property="article:published_time" content="2024-08-08T13:09:52.723Z">
+<meta property="article:modified_time" content="2024-08-08T13:09:52.723Z">
+<meta property="article:author" content="Yan Wang">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2024/08/08/Event-Event%20Relation%20Extraction/Event-Event%20Relation%20Extraction/GraphERE.jpg">
+  
+  
+  
+  <title>Yan Wang&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"pZ0EE7gT8tJRoYK1puEQzIy4-gzGzoHsz","app_key":"D5vg3ofAivBJWAo15xNUlCe3","server_url":"https://pz0ee7gt.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":true}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Yan Wang&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-08 21:09" pubdate>
+          August 8, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="event-event-relation-extraction">Event-Event Relation
+Extraction</h1>
+<h3 id="related-definitions">1. Related Definitions</h3>
+<ol type="1">
+<li><p><strong>事件：</strong> An event is an occurrence of societal
+importance, typically happening at a specific time and location,
+involving a set of participants. It can be represented as <span
+class="math inline">\((action\; or \;status, persons, time,
+location)\)</span>, action or status can be also called as a
+<strong>trigger word</strong>. Besides, in a graph, a node with a tag
+written its trigger word and with other subsidiary information nodes
+connected can represent a event briefly. <img
+src="./assets/Event%20in%20Graph.jpg#w70" srcset="/img/loading.gif" lazyload
+alt="Event in Graph" /></p></li>
+<li><p><strong>事件关系抽取：</strong>
+即抽取事件之间的关系，事件之间的关系包括但不限于因果关系(Casual
+Relation)，子事件关系(Subevent Relation)，时序关系(Temporal
+Relation)，等同关系等，这些关系大类里又可以细分为诸多子关系。比如，时序关系可以分为before，after和overlapping等子关系。</p></li>
+<li><p><strong>事件因果关系抽取：</strong>
+即抽取事件之间的因果关系(Casual Relation)，因果关系也可以细分为explicit
+casualty和implicit casualty等子关系。</p></li>
+</ol>
+<h3 id="事件抽取与事件关系抽取的相关工作">2.
+事件抽取与事件关系抽取的相关工作</h3>
+<ul>
+<li><p><strong>GraphERE</strong> <img src="GraphERE.jpg" srcset="/img/loading.gif" lazyload
+style="width:80.0%" alt="GraphERE" />
+此模型可以用于抽取文本中的一系列events及其关系，首先，包含多个events的文本被输入，然后相应的解析器解析成两种不同的Graphs
+(AMR and
+IE)，再对每一个事件进行增强嵌入得到event向量，最后通过transformer和Deep
+Graph Learning获得关系抽取结果图。</p></li>
+<li><p><strong>GraphIE</strong>
+可以给定一句包含事件的语句作为模型输入，模型通过decoder输出各个token的tag，即：某词是事件的触发词，某词是事件的论元…
+然后就可以使用这些知识构建图。 <img src="GraphIE.jpg" srcset="/img/loading.gif" lazyload
+style="width:80.0%" alt="GraphIE" /></p></li>
+<li><p><strong>ERNIE</strong>
+ERNIE是一种新的预训练模型，可看作Transformer的decoder架构的一种变体，可以结合大规模文本语料库和知识图谱(KGs)，利用知识图谱中丰富的结构化知识事实来增强预训练模型的语言理解能力。
+<img src="未命名.jpg" srcset="/img/loading.gif" lazyload style="width:80.0%" alt="ERNIE" />
+如图所示，此模型用于输入一段文本与文本中输入文本中某一些tokens对应的entities，输出一段文本与entity对应的输入tokens的位置，输出的文本可以是对输入mask的推测，对输入的下一句话的预测等。实验也证明它比BERT等baseline模型效果要好。</p></li>
+<li><p><strong>Prompt-based event relation identification with
+Constrained Prefix Attention mechanism</strong>
+本文提出了一种新的事件关系抽取框架，输入两个分别包含1个event的语句，系统即可判断出两个event之间的并且属于<span
+class="math inline">\(relation\;set=[casual, \;temporal,
+\;unrelated]\)</span> 的关系。 <img src="11.jpg" srcset="/img/loading.gif" lazyload
+alt="Prompt Based Model" />
+在创新点方面，本文主要提出了两点改进：</p></li>
+</ul>
+<ol type="1">
+<li>在输入中添加包含一系列关系名称的 <span
+class="math inline">\(prefix=relation\;set\)</span>
+，并在BART模型中添加prefix-biased fully-connected
+attention层，让关系对应的attention
+bias可以体现在每一个输入的token中。</li>
+<li>Inspired by ZLPR，
+作者提出了一种特别的损失函数，可以考虑中间过程并且更加关注正确的prefix。除此以外，交叉熵损失函数也被作为最终损失函数的一部分。</li>
+</ol>
+<ul>
+<li><strong>MetaIE</strong></li>
+</ul>
+<ol type="1">
+<li>此模型可以输入一段文本，输出序列标注和spans。</li>
+<li>此模型思路相对较为简单，即通过Symbolic Knowledge
+Distillation将参数量大的Teacher Model变为Student Model。</li>
+<li>此模型使用的Teacher Model是GPT-3.5-turbo via LLM Prompting with
+in-context learning，Student Model是RoBERTa-Large。</li>
+<li>在构建训练集时，本文使用大语言模型对海量的数据进行提问整合，减小了构建数据集的难度。</li>
+<li>虽然此方法能够通过大模型训练出效果较好的小模型，但是，此方法也会将大模型的bias带入小模型。</li>
+</ol>
+<p><img src="MetaIE.jpg" srcset="/img/loading.gif" lazyload alt="MetaIE" /> - <strong>Selecting Optimal
+Context Sentences for Event-Event Relation Extraction</strong>
+此模型可以输入一段document并标注出event的触发词语，输出event之间的关系。在创新方面，此模型主要抓住大语言模型无法理解长文本这一问题作出改进，提取出输入的文本中不包含trigger
+word的但是与事件关系有关的语句作为关键语句，将关键语句和包含trigger
+word的语句整合送入大语言模型得到抽取结果。</p>
+<ul>
+<li><strong>Mastering Context-to-Label Representation Transformation for
+Event Causality Identification with Diffusion Models</strong>
+此模型可以输入两句描述event的语句，输出它们之间的关系。此模型受启发于CV领域的diffusion
+model
+(先添加高斯噪声，后逆向还原图像)，训练出一个可以将文本中的“噪声”（不相关文本）剔除的模型。
+<img src="./assets/Diffusion%20Model.jpg" srcset="/img/loading.gif" lazyload alt="Diffusion Model" /></li>
+</ul>
+<h3 id="summary">3. Summary</h3>
+<ol type="1">
+<li><strong>任务形式差别</strong>
+在任务形式方面，有些是给定了带有event的语句要求抽取出其关系；有些是给定一段文本，要求先抽取出event后找出其关系。</li>
+<li><strong>方法差别</strong>
+在实现方法方面，一般是将对话大语言模型，预训练模型(PLM)，知识图谱，提示工程中的几个内容相结合成新的模型实现。</li>
+</ol>
+<h3 id="current-challenges">4. Current Challenges</h3>
+<ol type="1">
+<li>因果关系中的explicit casualty相对较容易提取，但是implicit
+casualty因为没有明确的关键词提示较难提取。</li>
+<li>目前模型需要大规模的训练集进行训练，然而目前训练集规模普遍偏小。eg:
+the largest existing dataset Event Story Line only contains 258
+documents, and the training data in practical application scenarios is
+scarcer than Event Story Line.</li>
+<li>目前以大语言模（如GhatGPT）为基础的事件及其关系抽取模型存在bias与hallucination（大模型幻觉），并且在模型中添加In
+Context Learning或者Chain of
+Thoughts后会加剧hallucination这一现象。除此以外，大模型对提问的prompt非常敏感，很难调整到合适的prompt并且缺乏理论依据。</li>
+<li>可能输入语句中存在大量不相关的内容导致大量noise产生，从而影响模型效果。</li>
+<li>有一些事件使用过长的语句描述并且其关系也要结合长上下文进行理解，然而目前大语言模型对长上下文的理解能力有限，比如BERT模型的输入最长只有512个token。</li>
+<li>有一些文本中两个事件的触发词语之间的distance较长，即两个触发词之间相隔的token数较多，模型难以抽取之间的关系。</li>
+<li>对于一些zero-shot的问题无法得到较好的抽取结果</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2024/08/08/Event-Event Relation Extraction/Event-Event Relation Extraction/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yan Wang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 8, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/08/Different%20Paradigms%20of%20Graph%20Neuron%20Network/Different%20Paradigms%20of%20Graph%20Neuron%20Network/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/08/Advanced%20Paradigm%20of%20Graph%20Neuron%20Network/Advanced%20Paradigm%20of%20Graph%20Neuron%20Network/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
